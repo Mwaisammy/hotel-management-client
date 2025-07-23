@@ -17,6 +17,8 @@ import Contact from "./pages/Contact";
 import DashboardPage from "./pages/DashboardPage";
 import Bookings from "./Features/bookings/bookings";
 import { Toaster } from "react-hot-toast";
+import User from "./Features/users/user";
+import Rooms from "./Features/rooms/rooms";
 
 const queryClient = new QueryClient();
 
@@ -63,7 +65,7 @@ const router = createBrowserRouter([
       },
       {
         path: "rooms",
-        element: <h1>Rooms</h1>,
+        element: <Rooms />,
       },
       {
         path: "bookings",
@@ -71,7 +73,7 @@ const router = createBrowserRouter([
       },
       {
         path: "users",
-        element: <h1>Users</h1>,
+        element: <User />,
       },
       {
         path: "payments",

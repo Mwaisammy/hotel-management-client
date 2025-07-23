@@ -7,6 +7,7 @@ import { usersAPI } from '@/Features/users/userAPI';
 import { loginAPI } from '@/Features/login/loginAPI';
 import { bookingsAPI } from '@/Features/bookings/bookingsAPI';
 import userSlice from '@/Features/login/userSlice'
+import { roomsAPI } from '@/Features/rooms/roomsAPI';
 // 1. Combine all your slices and API reducers
 const rootReducer = combineReducers({
   hotels: hotelSlice,
@@ -14,6 +15,7 @@ const rootReducer = combineReducers({
   [usersAPI.reducerPath]: usersAPI.reducer,
   [loginAPI.reducerPath]: loginAPI.reducer,
   [bookingsAPI.reducerPath] : bookingsAPI.reducer,
+  [roomsAPI.reducerPath]: roomsAPI.reducer,
 
   user: userSlice
 });
@@ -36,6 +38,7 @@ export const store = configureStore({
   .concat(usersAPI.middleware)
   .concat(loginAPI.middleware)
   .concat(bookingsAPI.middleware)
+  .concat(roomsAPI.middleware)
 });
 
 

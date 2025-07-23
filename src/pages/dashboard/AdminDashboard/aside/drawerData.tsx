@@ -1,8 +1,8 @@
 import {
+  Bed,
   CalendarCheck2,
   ChartNoAxesCombined,
   HeartPlus,
-  HouseIcon,
   Users,
   Wallet,
 } from "lucide-react";
@@ -24,7 +24,7 @@ export const adminDrawerData: DrawerData[] = [
   {
     id: "rooms",
     name: "Rooms",
-    icon: HouseIcon,
+    icon: Bed,
     link: "rooms",
   },
   {

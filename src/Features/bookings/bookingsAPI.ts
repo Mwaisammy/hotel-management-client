@@ -13,13 +13,6 @@ export type TBookings = {
     bookingStatus: string; 
 }
 
-    // "bookingId": 5,
-    // "userId": 5,
-    // "roomId": 5,
-    // "checkInDate": "2025-07-30T00:00:00.000Z",
-    // "checkOutDate": "2025-08-05T00:00:00.000Z",
-    // "totalAmount": "36000.00",
-    // "bookingStatus": "Confirmed"
 
 
 export const bookingsAPI = createApi({
@@ -67,7 +60,7 @@ export const bookingsAPI = createApi({
 
         deleteBookings: builder.mutation<void, number>({
             query: (bookingId) => ({
-                url: `/bookings/${bookingId}`,
+                url: `/booking/${bookingId}`,
                 method: 'DELETE',
             }),
             invalidatesTags: ['Bookings'],

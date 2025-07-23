@@ -4,14 +4,12 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { bookingsAPI, type TBookings } from "@/Features/bookings/bookingsAPI";
 import { toast } from "react-hot-toast";
-import { Button } from "@/components/ui/button";
 
-type CreateBookingProps = {
+type updateBookingProps = {
   booking: TBookings | null; //can be null if no booking is selected
 };
 
-type CreateBookingInputs = {
-  userId: number;
+type updateBookingInputs = {
   roomId: number;
   checkInDate: string;
   checkOutDate: string;
@@ -19,21 +17,8 @@ type CreateBookingInputs = {
   bookingStatus: string;
 };
 
-// {
-//   "userId": 2,
-//   "roomId": 5,
-//   "checkInDate": "2025-07-06T00:00:00.000Z",
-//   "checkOutDate": "2025-09-10T00:00:00.000Z",
-//   "totalAmount": 20000,
-//   "bookingStatus": "Pending"
-// }
-
 const schema = yup.object({
-  userId: yup
-    .number()
-    .required("User ID is required")
-    .positive("User ID must be a positive number")
-    .integer("User ID must be an integer"),
+  bookingStatus: yup.string().required("Booking status is required"),
 
   roomId: yup
     .number()
@@ -42,17 +27,16 @@ const schema = yup.object({
     .integer("Room ID must be an integer"),
   totalAmount: yup
     .number()
-    .required("Amount is required")
-    .positive("Amount must be a positive number")
-    .integer("Amount must be an integer"),
+    .required("Room ID is required")
+    .positive("Room ID must be a positive number")
+    .integer("Room ID must be an integer"),
   checkOutDate: yup.string().required("Check out string string is required"),
   checkInDate: yup.string().required("Check in string is required"),
-  bookingStatus: yup.string().required("Booking status is required"),
 });
 
-const CreateBooking = ({ booking }: CreateBookingProps) => {
-  const [createBooking, { isLoading }] = bookingsAPI.useCreateBookingsMutation({
-    fixedCacheKey: "CreateBooking",
+const UpdateBooking = ({ booking }: updateBookingProps) => {
+  const [updateBooking, { isLoading }] = bookingsAPI.useUpdateBookingsMutation({
+    fixedCacheKey: "UpdateBooking",
   });
 
   const {
@@ -60,17 +44,14 @@ const CreateBooking = ({ booking }: CreateBookingProps) => {
     handleSubmit,
     reset,
     setValue,
-    watch,
     formState: { errors },
-  } = useForm<CreateBookingInputs>({
+  } = useForm<updateBookingInputs>({
     resolver: yupResolver(schema),
   });
 
-  const roomId = watch("roomId");
-  const userId = watch("userId");
-
   useEffect(() => {
     if (booking) {
+      setValue("bookingStatus", booking.bookingStatus);
       setValue("totalAmount", booking.totalAmount);
       setValue(
         "checkInDate",
@@ -87,105 +68,52 @@ const CreateBooking = ({ booking }: CreateBookingProps) => {
     }
   }, [booking, setValue, reset]);
 
-  const onSubmit: SubmitHandler<CreateBookingInputs> = async (data) => {
+  const onSubmit: SubmitHandler<updateBookingInputs> = async (data) => {
+    if (!booking) {
+      toast.error("No booking selected for update");
+      return;
+    }
     try {
-      const response = await createBooking(data).unwrap(); //expect a success/error message
-      console.log("Create booking", response);
-      toast.success("Booking created successfully!");
-      reset(); // Clear the form after successful submission
-      (document.getElementById("create_modal") as HTMLDialogElement)?.close();
+      const result = await updateBooking({
+        ...data,
+        id: booking.bookingId,
+      });
+
+      if ("error" in result) {
+        toast.error("Failed to update booking");
+        console.error(result.error);
+      } else {
+        toast.success("booking updated successfully");
+        console.log("booking was updated successfully", result.data);
+        reset();
+        (document.getElementById("update_modal") as HTMLDialogElement)?.close();
+      }
     } catch (error) {
-      console.error("Error creating booking:", error);
-      toast.error("Failed to create booking. Please try again.");
+      toast.error("booking failed to update");
+      console.log(error);
+      (document.getElementById("update_modal") as HTMLDialogElement)?.close();
     }
   };
 
   return (
-    <dialog id="create_modal" className="modal sm:modal-middle">
+    <dialog id="update_modal" className="modal sm:modal-middle">
       <div className="modal-box bg-gray-900 border border-blue-500 text-white w-full max-w-xs sm:max-w-lg mx-auto rounded-lg">
-        <h3 className="font-bold text-lg mb-4">Create booking</h3>
+        <h3 className="font-bold text-lg mb-4">Update booking</h3>
         <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
-          <div className="dropdown">
-            <>
-              <div className="dropdown">
-                <label tabIndex={0} role="button" className="">
-                  <Button variant={"outline"} className="text-black">
-                    {userId ? `User ${userId}` : "Select User ID"}
-                  </Button>
-                </label>
-                <ul
-                  tabIndex={0}
-                  className="dropdown-content menu bg-black rounded-box z-10 w-52 p-2 shadow-sm"
-                >
-                  {[1, 2, 3, 4, 5].map((num) => (
-                    <li key={num}>
-                      <a
-                        href="#!"
-                        onClick={(e) => {
-                          e.preventDefault();
-                          setValue("userId", num, { shouldValidate: true });
-                        }}
-                      >
-                        user {num}
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              {errors.userId && (
-                <span className="text-sm text-red-700">
-                  {errors.userId.message}
-                </span>
-              )}
-
-              {/* You can remove the original input for roomId, as this replaces it */}
-            </>
-          </div>
-          <div className="dropdown">
-            <>
-              <div className="dropdown">
-                <label tabIndex={0} role="button" className="">
-                  <Button variant={"outline"} className="text-black">
-                    {roomId ? `Room ${roomId}` : "Select Room ID"}
-                  </Button>
-                </label>
-                <ul
-                  tabIndex={0}
-                  className="dropdown-content menu bg-black rounded-box z-10 w-52 p-2 shadow-sm"
-                >
-                  {[1, 2, 3, 4, 5].map((num) => (
-                    <li key={num}>
-                      <a
-                        href="#!"
-                        onClick={(e) => {
-                          e.preventDefault();
-                          setValue("roomId", num, { shouldValidate: true });
-                        }}
-                      >
-                        Room {num}
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              {errors.roomId && (
-                <span className="text-sm text-red-700">
-                  {errors.roomId.message}
-                </span>
-              )}
-
-              {/* You can remove the original input for roomId, as this replaces it */}
-            </>
-          </div>
-
+          <label htmlFor="">
+            Room ID
+            <input
+              type="number"
+              {...register("roomId")}
+              placeholder="Room ID"
+              className="input rounded w-full p-2 focus:ring-2 focus:ring-blue-500 text-lg bg-white text-gray-800"
+            />
+          </label>
           {errors.roomId && (
             <span className="text-sm text-red-700">
               {errors.roomId.message}
             </span>
           )}
-
           <label htmlFor="">
             Amount
             <input
@@ -276,10 +204,10 @@ const CreateBooking = ({ booking }: CreateBookingProps) => {
               {isLoading ? (
                 <>
                   <span className="loading loading-spinner text-primary" />{" "}
-                  Creating...
+                  Updating...
                 </>
               ) : (
-                "Create"
+                "Update"
               )}
             </button>
             <button
@@ -287,7 +215,7 @@ const CreateBooking = ({ booking }: CreateBookingProps) => {
               type="button"
               onClick={() => {
                 (
-                  document.getElementById("create_modal") as HTMLDialogElement
+                  document.getElementById("update_modal") as HTMLDialogElement
                 )?.close();
                 reset();
               }}
@@ -301,4 +229,4 @@ const CreateBooking = ({ booking }: CreateBookingProps) => {
   );
 };
 
-export default CreateBooking;
+export default UpdateBooking;

@@ -26,12 +26,12 @@ const AdminDashboard = () => {
           Welcome to Admin Dashboard
         </span>
       </div>
-      <div className="flex">
+      <div className="flex overflow-x-hidden">
         <aside
           className={`bg-blue-400 w-68 min-h-screen fixed top-16 
-            ${drawerOpen ? "" : "hidden"}
-            lg:static lg:block
-          `}
+      ${drawerOpen ? "" : "hidden"}
+      lg:static lg:block
+    `}
         >
           <div>
             <Button
@@ -45,10 +45,15 @@ const AdminDashboard = () => {
             <AdminDrawer />
           </div>
         </aside>
-        <main className="bg-gray-900 text-white w-full min-h-screen">
-          <Outlet />
+
+        {/* Scrollable content area */}
+        <main className="bg-gray-900 text-white w-full min-h-screen overflow-auto">
+          <div className="p-4 min-w-[1000px] min-h-[500px]">
+            <Outlet />
+          </div>
         </main>
       </div>
+
       <Footer />
     </div>
   );
