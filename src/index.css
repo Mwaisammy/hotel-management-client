@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@300..700&family=Pacifico&display=swap');
 @import "tailwindcss";
 @import "tw-animate-css";
  @plugin "daisyui" {
@@ -118,7 +120,24 @@
   * {
     @apply border-border outline-ring/50;
   }
-  body {
-    @apply bg-background text-foreground;
-  }
+ body , footer {
+  @apply bg-background text-foreground;
+  font-family: "Comfortaa", sans-serif;
+
+  /* Sunset gradient background glow */
+  /* background-image: linear-gradient(to right, #cf9e90, #ffb600);
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  background-size: cover; */
+}
+
+/* body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(to right, #cf9e90, #ffb600);
+  filter: blur(100px);
+  opacity: 0.3;
+} */
 }

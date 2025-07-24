@@ -3,13 +3,15 @@ import { roomsAPI, type TRoom } from "./roomsAPI";
 import { PenBoxIcon, Trash2 } from "lucide-react";
 import { useState } from "react";
 import CreateRoom from "./createRoom";
+import UpdateRoom from "./updateRoom";
+import DeleteRoom from "./deleteRoom";
 // import Updateroom from "./updateRoom";
 // import Createroom from "./createRoom";
 // import Deleteroom from "./deleteRoom";
 
 const Rooms = () => {
   const [selectedroom, setSelectedRoom] = useState<TRoom | null>(null);
-  const [deleteroom, setDeleteRoom] = useState<TRoom | null>(null);
+  const [deletedroom, setDeleteRoom] = useState<TRoom | null>(null);
   const {
     data: RoomsData,
     isLoading: RoomsLoading,
@@ -26,8 +28,8 @@ const Rooms = () => {
   console.log("Rooms:", RoomsData);
   return (
     <div>
-      {/* <Updateroom room={selectedroom} /> */}
-      {/* <DeleteRoom room={deleteroom} /> */}
+      <UpdateRoom room={selectedroom} />
+      <DeleteRoom room={deletedroom} />
       <CreateRoom room={selectedroom} />
 
       {RoomsLoading && <p>Loading...</p>}
@@ -106,7 +108,7 @@ const Rooms = () => {
                         handleEdit(room);
                         (
                           document.getElementById(
-                            "update_modal"
+                            "update_room_modal"
                           ) as HTMLDialogElement
                         ).showModal();
                       }}
@@ -120,7 +122,7 @@ const Rooms = () => {
                         setDeleteRoom(room);
                         (
                           document.getElementById(
-                            "delete_modal"
+                            "delete_room_modal"
                           ) as HTMLDialogElement
                         ).showModal();
                       }}

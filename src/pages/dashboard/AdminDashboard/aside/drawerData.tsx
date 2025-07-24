@@ -3,6 +3,7 @@ import {
   CalendarCheck2,
   ChartNoAxesCombined,
   HeartPlus,
+  Hotel,
   Users,
   Wallet,
 } from "lucide-react";
@@ -50,5 +51,11 @@ export const adminDrawerData: DrawerData[] = [
     name: "Support Tickets",
     icon: HeartPlus,
     link: "support-tickets",
+  },
+  {
+    id: "hotels",
+    name: "Hotels",
+    icon: Hotel,
+    link: "hotels",
   },
 ];

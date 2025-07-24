@@ -22,7 +22,7 @@ const SearchForm = () => {
   };
 
   return (
-    <Card className="p-6 bg-background/95 backdrop-blur-sm shadow-xl max-w-4xl mx-auto">
+    <Card className="p-6  backdrop-blur-sm shadow-xl max-w-4xl mx-auto bg-amber-100">
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
         {/* Location */}
         <div className="space-y-2">

@@ -1,39 +1,36 @@
 import toast from "react-hot-toast";
-import { bookingsAPI, type TBookings } from "../bookings/bookingsAPI";
+import { roomsAPI, type TRoom } from "../rooms/roomsAPI";
 
 type DeleteBookingProps = {
-  booking: TBookings | null;
+  room: TRoom | null;
 };
 
-const DeleteBooking = ({ booking }: DeleteBookingProps) => {
-  const [deleteBooking, { isLoading }] = bookingsAPI.useDeleteBookingsMutation({
-    fixedCacheKey: "deleteTodo", //used to prevent cache invalidation issues - in simple terms, it helps to keep the cache consisten
-  });
+const DeleteRoom = ({ room }: DeleteBookingProps) => {
+  const [deletedRoom, { isLoading }] = roomsAPI.useDeleteRoomMutation();
   const handleDelete = async () => {
     try {
-      if (!booking) {
-        toast.error("booking not found");
+      if (!room) {
+        toast.error("Room not found");
         return;
       }
-      const response = await deleteBooking(booking.bookingId);
-      console.log("Delete booking", response);
-      toast.success("booking deleted successfully!");
-      (document.getElementById("delete_modal") as HTMLDialogElement)?.close();
+      const response = await deletedRoom(room.roomId);
+      console.log("Delete room", response);
+      toast.success("Room deleted successfully!");
+      (
+        document.getElementById("delete_room_modal") as HTMLDialogElement
+      )?.close();
     } catch (error) {
       console.log(error);
-      toast.error("Failed to delete booking. Please try again.");
+      toast.error("Failed to delete room. Please try again.");
     }
   };
   return (
-    <dialog id="delete_modal" className="modal sm:modal-middle  ">
+    <dialog id="delete_room_modal" className="modal sm:modal-middle  ">
       <div className="modal-box bg-black border border-rose-500 text-white w-full max-w-xs sm:max-w-lg mx-auto rounded-lg">
-        <h3 className="font-bold text-lg mb-4">Delete booking</h3>
+        <h3 className="font-bold text-lg mb-4">Delete room</h3>
         <p className="mb-6">
           Are you sure you want to delete{" "}
-          <span className="font-semibold">
-            booking ID: {booking?.bookingId}
-          </span>
-          ?
+          <span className="font-semibold">Room {room?.roomType}</span>?
         </p>
         <div className="modal-action flex gap-4">
           <button
@@ -55,7 +52,9 @@ const DeleteBooking = ({ booking }: DeleteBookingProps) => {
             type="button"
             onClick={() =>
               (
-                document.getElementById("delete_modal") as HTMLDialogElement
+                document.getElementById(
+                  "delete_room_modal"
+                ) as HTMLDialogElement
               )?.close()
             }
           >
@@ -67,4 +66,4 @@ const DeleteBooking = ({ booking }: DeleteBookingProps) => {
   );
 };
 
-export default DeleteBooking;
+export default DeleteRoom;
