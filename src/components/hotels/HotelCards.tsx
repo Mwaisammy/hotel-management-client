@@ -2,11 +2,13 @@ import { Star, MapPin, Wifi, Car, Coffee, Waves } from "lucide-react";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import type { Hotel } from "@/store/slices/hotelSlice";
+// import type { Hotel } from "@/store/slices/hotelSlice";
+import hotelIMG from "@/assets/images/hotel-3.jpg";
+import type { THotel } from "@/Features/hotels/hotelsAPI";
 
 interface HotelCardProps {
-  hotel: Hotel;
-  onBook?: (hotelId: string) => void;
+  hotel: THotel;
+  onBook?: (hotelId: number) => void;
 }
 
 const HotelCard = ({ hotel, onBook }: HotelCardProps) => {
@@ -30,7 +32,7 @@ const HotelCard = ({ hotel, onBook }: HotelCardProps) => {
       {/* Hotel Image */}
       <div className="relative overflow-hidden">
         <img
-          src={hotel.image}
+          src={hotelIMG}
           alt={hotel.name}
           className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
         />
@@ -58,13 +60,13 @@ const HotelCard = ({ hotel, onBook }: HotelCardProps) => {
         </div>
 
         {/* Description */}
-        <p className="text-sm text-muted-foreground mt-2 line-clamp-2">
+        {/* <p className="text-sm text-muted-foreground mt-2 line-clamp-2">
           {hotel.description}
-        </p>
+        </p> */}
 
         {/* Amenities */}
-        <div className="flex items-center gap-2 mt-3">
-          {hotel.amenities.slice(0, 4).map((amenity, index) => (
+        {/* <div className="flex items-center gap-2 mt-3">
+          {hotel..slice(0, 4).map((amenity, index) => (
             <div
               key={index}
               className="flex items-center gap-1 text-xs text-muted-foreground"
@@ -79,7 +81,7 @@ const HotelCard = ({ hotel, onBook }: HotelCardProps) => {
               +{hotel.amenities.length - 4} more
             </span>
           )}
-        </div>
+        </div> */}
       </CardContent>
 
       <CardFooter className="p-4 pt-0 flex items-center justify-between">
@@ -87,14 +89,14 @@ const HotelCard = ({ hotel, onBook }: HotelCardProps) => {
         <div className="space-y-1">
           <div className="flex items-baseline gap-1">
             <span className="text-2xl font-bold text-foreground">
-              ${hotel.price}
+              ${hotel.location}
             </span>
             <span className="text-sm text-muted-foreground">/night</span>
           </div>
         </div>
 
         {/* Book Button */}
-        <Button onClick={() => onBook?.(hotel.id)} className="px-6">
+        <Button onClick={() => onBook?.(hotel.hotelId)} className="px-6">
           Book Now
         </Button>
       </CardFooter>

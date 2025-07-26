@@ -1,9 +1,10 @@
-import { Button } from "@/components/ui/button";
 import { hotelsAPI, type THotel } from "./hotelsAPI";
 import { PenBoxIcon, Trash2 } from "lucide-react";
 import { useState } from "react";
 import CreateHotel from "./createHotel";
 import UpdateHotel from "./updateHotel";
+import DeleteHotel from "./deleteHotel";
+import { Button } from "@/components/ui/button";
 // import CreateRoom from "./createHotel";
 // import UpdateRoom from "./updateRoom";
 // import DeleteRoom from "./deleteHotel";
@@ -39,7 +40,7 @@ const Hotel = () => {
   return (
     <div>
       <UpdateHotel hotel={selectHotel} />
-      {/* <DeleteRoom hotel={deletedroom} /> */}
+      <DeleteHotel hotel={deleteHotel} />
       <CreateHotel hotel={selectHotel} />
 
       {RoomsLoading && <p>Loading...</p>}

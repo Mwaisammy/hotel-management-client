@@ -20,6 +20,7 @@ import { Toaster } from "react-hot-toast";
 import User from "./Features/users/user";
 import Rooms from "./Features/rooms/rooms";
 import Hotel from "./Features/hotels/hotels";
+import Tickets from "./Features/tickets/tickets";
 
 const queryClient = new QueryClient();
 
@@ -82,7 +83,7 @@ const router = createBrowserRouter([
       },
       {
         path: "support-tickets",
-        element: <h1>Support Tickets</h1>,
+        element: <Tickets />,
       },
       {
         path: "hotels",

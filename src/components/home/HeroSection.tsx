@@ -4,14 +4,6 @@ import SearchForm from "./SearchForm";
 const HeroSection = () => {
   return (
     <section className="relative h-screen flex items-center justify-center bg-gradient-to-br from-primary/20 to-secondary/20 overflow-hidden">
-      {/* Background Image */}
-      {/* <div
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-90 z-0"
-        style={{
-          backgroundImage: `url(${bgImage})`,
-        }}
-      /> */}
-
       {/* Gradient overlay for smooth fade into next section */}
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-white/10 to-white z-0" />
 

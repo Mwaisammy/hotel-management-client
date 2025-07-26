@@ -48,6 +48,7 @@ const AdminDashboard = () => {
 
         {/* Scrollable content area */}
         <main className="bg-gray-900 text-white w-full min-h-screen overflow-auto">
+          <h4 className="text-center text-2xl">Welcome to Admin Dashboard</h4>
           <div className="p-4 min-w-[1000px] min-h-[500px]">
             <Outlet />
           </div>

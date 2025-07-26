@@ -1,12 +1,20 @@
-import { useAppSelector } from "@/hooks/redux";
+// import { useAppSelector } from "@/hooks/redux";
 import { Button } from "@/components/ui/button";
 import HotelCard from "../hotels/HotelCards";
+import { hotelsAPI, type THotel } from "@/Features/hotels/hotelsAPI";
 
 const FeaturedHotels = () => {
-  const { hotels } = useAppSelector((state) => state.hotels);
+  // const { hotels } = useAppSelector((state) => state.hotels);
+  const {
+    data: hotelData,
+    isLoading: hotelLoading,
+    // error: roomError,
+  } = hotelsAPI.useGetHotelsQuery(undefined, {
+    refetchOnMountOrArgChange: true,
+    pollingInterval: 60000,
+  });
 
   // Show first 4 hotels as featured
-  const featuredHotels = hotels.slice(0, 4);
 
   const handleBookHotel = (hotelId: string) => {
     console.log("Booking hotel:", hotelId);
@@ -30,8 +38,12 @@ const FeaturedHotels = () => {
 
         {/* Hotel Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-          {featuredHotels.map((hotel) => (
-            <HotelCard key={hotel.id} hotel={hotel} onBook={handleBookHotel} />
+          {hotelData?.map((hotel: THotel) => (
+            <HotelCard
+              key={hotel.hotelId}
+              hotel={hotel}
+              onBook={handleBookHotel}
+            />
           ))}
         </div>
 
