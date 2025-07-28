@@ -49,7 +49,7 @@
 
 :root {
   --radius: 0.625rem;
-  --background: oklch(1 0 0);
+  --background: oklch(97.365% 0.01187 67.48);
   --foreground: oklch(0.145 0 0);
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.145 0 0);
@@ -140,4 +140,24 @@
   filter: blur(100px);
   opacity: 0.3;
 } */
+
+/* global styles (e.g., ./src/index.css or ./app/globals.css) */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #cf9e90; /* Light background */
+}
+
+::-webkit-scrollbar-thumb {
+ background: linear-gradient(to right, #cf9e90, #ffb600); /* Scrollbar handle */
+  border-radius: 8px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555; /* On hover */
+}
+
 }

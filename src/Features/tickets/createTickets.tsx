@@ -25,7 +25,7 @@ const ticketSchema = yup.object({
 
 export const CreateTicketForm = ({ ticket }: TicketFormData) => {
   const { user } = useSelector((state: RootState) => state.user);
-  const userId = user?.id || user.userId;
+  const userId = user.id;
   const [createTicket, { isLoading }] = ticketsAPI.useCreateTicketsMutation();
 
   const {

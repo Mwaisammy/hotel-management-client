@@ -11,7 +11,7 @@ export type TUser = {
   password: string
   role: string
   isVerified: string
-  avatar: string
+  imageUrl: string
   createdAt: string
   updatedAt: string
 }

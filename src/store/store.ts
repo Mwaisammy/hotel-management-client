@@ -29,7 +29,7 @@ const persistConfig = {
   key: 'root',
   version: 1,
   storage,
-  whitelist: [ 'user'], // only persist these, not the API slice
+  whitelist: ['user'], // only persist these, not the API slice
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

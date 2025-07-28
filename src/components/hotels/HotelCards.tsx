@@ -1,4 +1,30 @@
-import { Star, MapPin, Wifi, Car, Coffee, Waves } from "lucide-react";
+import {
+  Star,
+  MapPin,
+  Wifi,
+  Car,
+  Coffee,
+  Waves,
+  Utensils,
+  ShieldCheck,
+  ConciergeBell,
+  ShowerHead,
+  Thermometer,
+  AlarmClock,
+  KeyRound,
+  Leaf,
+  PawPrint,
+  Plug,
+  Lock,
+  BedDouble,
+  Fan,
+  Tv,
+  Snowflake,
+  Dumbbell,
+  Globe, // For Lake View
+  Sun,
+  Flame,
+} from "lucide-react";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -20,12 +46,64 @@ const HotelCard = ({ hotel, onBook }: HotelCardProps) => {
         return <Waves className="h-4 w-4" />;
       case "parking":
         return <Car className="h-4 w-4" />;
-      case "restaurant":
+      case "free breakfast":
         return <Coffee className="h-4 w-4" />;
+      case "gym":
+        return <Dumbbell className="h-4 w-4" />;
+      case "air conditioning":
+      case "ac":
+        return <Snowflake className="h-4 w-4" />;
+      case "tv":
+        return <Tv className="h-4 w-4" />;
+      case "fan":
+        return <Fan className="h-4 w-4" />;
+      case "bed":
+      case "double bed":
+        return <BedDouble className="h-4 w-4" />;
+      case "dining":
+      case "kitchen":
+      case "meals":
+        return <Utensils className="h-4 w-4" />;
+      case "security":
+        return <ShieldCheck className="h-4 w-4" />;
+      case "reception":
+        return <ConciergeBell className="h-4 w-4" />;
+      case "shower":
+        return <ShowerHead className="h-4 w-4" />;
+      case "heater":
+      case "temperature control":
+        return <Thermometer className="h-4 w-4" />;
+      case "alarm":
+        return <AlarmClock className="h-4 w-4" />;
+      case "key":
+        return <KeyRound className="h-4 w-4" />;
+      case "safe":
+        return <Lock className="h-4 w-4" />;
+      case "eco-friendly":
+        return <Leaf className="h-4 w-4" />;
+      case "pet friendly":
+        return <PawPrint className="h-4 w-4" />;
+      case "charging station":
+      case "power outlet":
+        return <Plug className="h-4 w-4" />;
+      case "lake view":
+        return <Globe className="h-4 w-4" />;
+      case "nature trails":
+        return <MapPin className="h-4 w-4" />;
+      case "fireplace":
+        return <Flame className="h-4 w-4" />;
+      case "beach access":
+        return <Sun className="h-4 w-4" />;
       default:
         return null;
     }
   };
+
+  const amenities = Array.isArray(hotel.amenities)
+    ? hotel.amenities
+    : typeof hotel.amenities === "string"
+    ? hotel.amenities.split(",")
+    : [];
 
   return (
     <Card className="overflow-hidden hover:shadow-lg transition-shadow duration-300 group">
@@ -60,43 +138,46 @@ const HotelCard = ({ hotel, onBook }: HotelCardProps) => {
         </div>
 
         {/* Description */}
-        {/* <p className="text-sm text-muted-foreground mt-2 line-clamp-2">
+        <p className="text-sm text-muted-foreground mt-2 line-clamp-2">
           {hotel.description}
-        </p> */}
+        </p>
 
         {/* Amenities */}
-        {/* <div className="flex items-center gap-2 mt-3">
-          {hotel..slice(0, 4).map((amenity, index) => (
-            <div
-              key={index}
-              className="flex items-center gap-1 text-xs text-muted-foreground"
-              title={amenity}
-            >
-              {getAmenityIcon(amenity)}
-              <span className="hidden sm:inline">{amenity}</span>
-            </div>
-          ))}
-          {hotel.amenities.length > 4 && (
-            <span className="text-xs text-muted-foreground">
-              +{hotel.amenities.length - 4} more
-            </span>
-          )}
-        </div> */}
+        <div className="flex flex-wrap gap-2 mt-4">
+          {amenities
+            .map((a) => a.trim())
+            .slice(0, 4)
+            .map((amenity, index) => (
+              <div
+                key={index}
+                className="flex flex-row items-center gap-1 text-xs text-muted-foreground"
+                title={amenity}
+              >
+                {getAmenityIcon(amenity)}
+                <span className="hidden sm:inline">{amenity}</span>
+              </div>
+            ))}
+        </div>
+        {/* Amenities */}
       </CardContent>
 
       <CardFooter className="p-4 pt-0 flex items-center justify-between">
         {/* Price */}
         <div className="space-y-1">
           <div className="flex items-baseline gap-1">
-            <span className="text-2xl font-bold text-foreground">
-              ${hotel.location}
+            <span className="text-lg font-bold text-foreground">
+              Ksh{Math.floor(hotel.price)}
             </span>
             <span className="text-sm text-muted-foreground">/night</span>
           </div>
         </div>
 
         {/* Book Button */}
-        <Button onClick={() => onBook?.(hotel.hotelId)} className="px-6">
+        <Button
+          variant={"secondary"}
+          onClick={() => onBook?.(hotel.hotelId)}
+          className="px-6 bg-[#e6ddda] hover:bg-[#b47a61] transition-all duration-300 ease-in-out cursor-pointer"
+        >
           Book Now
         </Button>
       </CardFooter>

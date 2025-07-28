@@ -10,6 +10,9 @@ export type THotel = {
     contactPhone: string;
     category: string;
     rating: number;
+    price: number
+    description: string;
+    amenities:string
 };
 
 export const hotelsAPI = createApi({

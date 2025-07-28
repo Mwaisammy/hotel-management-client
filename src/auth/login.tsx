@@ -3,9 +3,9 @@ import { useForm, type SubmitHandler } from "react-hook-form";
 import { NavLink, useLocation, useNavigate } from "react-router";
 import * as yup from "yup";
 import toast from "react-hot-toast";
-// import { useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { loginAPI } from "@/Features/login/loginAPI";
-// import { loginSuccess } from "@/Features/login/userSlice";
+import { loginSuccess } from "@/Features/login/userSlice";
 
 type LoginInputs = {
   email: string;
@@ -29,7 +29,7 @@ const schema = yup.object({
 const Login = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
   const [loginUser, { isLoading }] = loginAPI.useLoginUserMutation();
 
   const emailFormState = location.state?.email || "";
@@ -49,11 +49,17 @@ const Login = () => {
     console.log(data);
     try {
       const response = await loginUser(data).unwrap();
-      // dispatch(loginSuccess(response));
+      dispatch(loginSuccess(response));
 
       console.log("Login", response);
       toast.success("Login in was successful");
-      navigate("/");
+
+      if (response.user.role === "admin") {
+        navigate("/dashboard/admin");
+      }
+      if (response.user.role === "user") {
+        navigate("/dashboard/user");
+      }
     } catch (error) {
       console.log("Error", error);
       toast.error("Error login in");

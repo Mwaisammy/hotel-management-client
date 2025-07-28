@@ -6,8 +6,16 @@ import ContactSection from "@/components/home/ContactSection";
 import FeaturedHotels from "@/components/home/FeaturedHostels";
 import bgImage from "@/assets/images/hotel-sunset-2.jpg";
 import StickyHeader from "@/components/home/stickyHeader";
+import { useEffect, useState } from "react";
 
 const Index = () => {
+  const [bgLoaded, setBgLoaded] = useState(false);
+
+  useEffect(() => {
+    const img = new Image();
+    img.src = bgImage;
+    img.onload = () => setBgLoaded(true);
+  }, []);
   return (
     <>
       {/* Sticky header appears on scroll */}
@@ -15,7 +23,9 @@ const Index = () => {
 
       {/* Hero Section with its own full-sized header */}
       <div
-        className="min-h-screen relative bg-gradient-to-br from-primary/20 to-secondary/20"
+        className={`min-h-screen relative transition-all duration-700 ${
+          bgLoaded ? "blur-0" : "blur-md"
+        }`}
         style={{
           backgroundImage: `url(${bgImage})`,
           backgroundSize: "cover",
@@ -23,8 +33,10 @@ const Index = () => {
           backgroundPosition: "center",
         }}
       >
-        <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-white z-0" />
+        {/* Gradient Overlay */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-[#f8d9ab] z-0" />
 
+        {/* Content Layer */}
         <div className="relative z-10">
           <Header />
           <HeroSection />

@@ -1,17 +1,28 @@
 import { useState } from "react";
 import { Menu, X, User, Bell, Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { NavLink } from "react-router";
+import { Link, NavLink } from "react-router";
 import Sunrise from "@/assets/images/Sunrise-nobg.png";
+import { useSelector } from "react-redux";
+import type { RootState } from "@/store/store";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const userrole = useSelector((state: RootState) => state.user.user?.role);
+  // const userToken = useSelector((state: RootState) => state.user.token);
+  const isAdmin = userrole === "admin";
+  const isUser = userrole === "user";
+  const destination = isAdmin
+    ? "/dashboard/admin"
+    : isUser
+    ? "/dashboard/user"
+    : "/login";
   const links = [
     { to: "/", label: "Home" },
     { to: "/hotels", label: "Hotels" },
     { to: "/about", label: "About" },
     { to: "/contact", label: "Contact" },
-    { to: "/dashboard/main", label: "Dashboard" },
+    { to: { pathname: destination }, label: "Dashboard" },
   ];
 
   return (
@@ -109,12 +120,12 @@ const Header = () => {
               >
                 Contact
               </a>
-              <a
-                href="/dashboard/main"
+              <Link
+                to={destination}
                 className="text-foreground hover:text-primary transition-colors"
               >
                 Dashboard
-              </a>
+              </Link>
               <Button className="w-full mt-4 bg-blue-500 hover:bg-blue-600">
                 Sign In
               </Button>

@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit"
 export type TLoginResponse = {
     token: string | null,
     user: {
-        id: number,
+        user_id: number,
         firstname: string,
         lastname: string,
         email: string,
@@ -12,7 +12,7 @@ export type TLoginResponse = {
     } | null
 }
 
-const initialState = {
+const initialState: TLoginResponse = {
     token: null,
     user: null
 }
@@ -24,6 +24,7 @@ const userSlice = createSlice({
     reducers: {
         loginSuccess: (state, action) => {
             state.token = action.payload.token
+            console.log(state.token)
             state.user = action.payload.user
 
         }, 

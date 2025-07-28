@@ -1,12 +1,12 @@
 import { Outlet } from "react-router";
 import Header from "@/components/layout/Header";
-import AdminDrawer from "./AdminDashboard/aside/AdminDrawer";
 import Footer from "@/components/layout/Footer";
 import { Menu, X } from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import UserDrawer from "./UserDrawer";
 
-const AdminDashboard = () => {
+const UserDashboard = () => {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const handleDrawerToggle = () => {
     setDrawerOpen((prev) => !prev);
@@ -23,7 +23,7 @@ const AdminDashboard = () => {
         </Button>
 
         <span className="text-white text-lg font-semibold">
-          Welcome to Admin Dashboard
+          Welcome to User Dashboard
         </span>
       </div>
       <div className="flex overflow-x-hidden">
@@ -42,13 +42,15 @@ const AdminDashboard = () => {
               <X />
             </Button>
 
-            <AdminDrawer />
+            <UserDrawer />
           </div>
         </aside>
 
         {/* Scrollable content area */}
         <main className="bg-gray-900 text-white w-full min-h-screen overflow-auto">
-          <h4 className="text-center text-2xl">Welcome to Admin Dashboard</h4>
+          <h4 className="text-center text-2xl m-4">
+            Welcome to User Dashboard
+          </h4>
           <div className="p-4 min-w-[1000px] min-h-[500px]">
             <Outlet />
           </div>
@@ -60,4 +62,4 @@ const AdminDashboard = () => {
   );
 };
 
-export default AdminDashboard;
+export default UserDashboard;

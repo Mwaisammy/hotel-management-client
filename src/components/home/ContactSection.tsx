@@ -54,8 +54,8 @@ const ContactSection = () => {
             </h3>
             {contactInfo.map((info, index) => (
               <div key={index} className="flex items-start space-x-3">
-                <div className="bg-primary/10 p-2 rounded-lg">
-                  <info.icon className="h-5 w-5 text-primary" />
+                <div className="bg- p-2 rounded-lg">
+                  <info.icon className="h-10 w-10 p-2 rounded-md text-white bg-gradient-to-r from-[#ff3c00] to-[#ffb600]" />
                 </div>
                 <div className="space-y-1">
                   <h4 className="font-medium text-foreground">{info.title}</h4>
@@ -116,7 +116,9 @@ const ContactSection = () => {
                   />
                 </div>
 
-                <Button className="w-full">Send Message</Button>
+                <Button className="w-full bg-gradient-to-r from-[#ff3c00] to-[#ffb600]">
+                  Send Message
+                </Button>
               </CardContent>
             </Card>
           </div>
