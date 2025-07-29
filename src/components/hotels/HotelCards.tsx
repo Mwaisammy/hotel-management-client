@@ -34,7 +34,7 @@ import type { THotel } from "@/Features/hotels/hotelsAPI";
 
 interface HotelCardProps {
   hotel: THotel;
-  onBook?: (hotelId: number) => void;
+  onBook?: (hotelId: number) => void; // <- make sure this is included
 }
 
 const HotelCard = ({ hotel, onBook }: HotelCardProps) => {
@@ -178,10 +178,16 @@ const HotelCard = ({ hotel, onBook }: HotelCardProps) => {
           onClick={() => onBook?.(hotel.hotelId)}
           className="px-6 bg-[#e6ddda] hover:bg-[#b47a61] transition-all duration-300 ease-in-out cursor-pointer"
         >
-          Book Now
+          View rooms
         </Button>
       </CardFooter>
     </Card>
+
+    //  onClick={() =>
+    //             (
+    //               document.getElementById("user_booking_modal") as HTMLDialogElement
+    //             )?.showModal()
+    //           }
   );
 };
 

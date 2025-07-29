@@ -14,6 +14,7 @@ import Login from "./auth/login";
 import Register from "./auth/register";
 import VerifyUser from "./auth/verifyUser";
 import Contact from "./pages/Contact";
+import RoomsPage from "./pages/RoomsPage";
 import Bookings from "./Features/bookings/bookings";
 import { Toaster } from "react-hot-toast";
 import User from "./Features/users/user";
@@ -23,6 +24,9 @@ import Tickets from "./Features/tickets/tickets";
 import Profile from "./pages/dashboard/profile";
 import AdminDashboard from "./pages/dashboard/AdminDashboard/AdminDashboard";
 import UserDashboard from "./pages/dashboard/UserDashboard/UserDashboard";
+import UserBookings from "./pages/dashboard/UserDashboard/bookings/userBookings";
+import UserPayments from "./pages/dashboard/UserDashboard/payments/userPayments";
+import UserTickets from "./pages/dashboard/UserDashboard/tickets/userTickets";
 
 const queryClient = new QueryClient();
 
@@ -60,6 +64,10 @@ const App = () => {
       element: <Register />,
     },
     {
+      path: "/hotels/:hotelId/rooms",
+      element: <RoomsPage />,
+    },
+    {
       path: "/register/verify",
       element: <VerifyUser />,
     },
@@ -69,7 +77,7 @@ const App = () => {
       children: [
         {
           path: "analytics",
-          element: <h1>Analytics</h1>,
+          element: <h1>Analytics coming soon</h1>,
         },
         {
           path: "profile",
@@ -89,7 +97,7 @@ const App = () => {
         },
         {
           path: "payments",
-          element: <h1>Payments</h1>,
+          element: <h1>Payments coming soon</h1>,
         },
         {
           path: "support-tickets",
@@ -107,35 +115,25 @@ const App = () => {
       children: [
         {
           path: "analytics",
-          element: <h1>Analytics</h1>,
+          element: <h1>Analytics coming soon</h1>,
         },
         {
           path: "profile",
           element: <Profile />,
         },
-        {
-          path: "rooms",
-          element: <Rooms />,
-        },
+
         {
           path: "bookings",
-          element: <Bookings />,
+          element: <UserBookings />,
         },
-        {
-          path: "users",
-          element: <User />,
-        },
+
         {
           path: "payments",
-          element: <h1>Payments</h1>,
+          element: <UserPayments />,
         },
         {
           path: "support-tickets",
-          element: <Tickets />,
-        },
-        {
-          path: "hotels",
-          element: <Hotel />,
+          element: <UserTickets />,
         },
       ],
     },

@@ -64,5 +64,10 @@ export const hotelsAPI = createApi({
       }),
       invalidatesTags: ["hotels"],
     }),
+    getHotelById: builder.query<THotel, number>({
+      query: (hotelId) => `/hotel/${hotelId}`,
+      transformResponse: (response: { message: THotel }) => response.message,
+      providesTags: ["hotels"],
+    }),
   }),
 });

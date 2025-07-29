@@ -2,14 +2,17 @@ import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 
 export interface Hotel {
-  id: string;
+  hotelId: number;
   name: string;
   location: string;
-  price: number;
+  address?: string;
+  contactPhone?: string;
+  category?: string;
   rating: number;
-  image: string;
+  price: number;
   description: string;
   amenities: string[];
+  image: string;
 }
 
 interface HotelState {
@@ -21,7 +24,7 @@ interface HotelState {
 const initialState: HotelState = {
   hotels: [
     {
-      id: "1",
+      hotelId: 1,
       name: "Luxury Resort & Spa",
       location: "Bali, Indonesia",
       price: 299,
@@ -31,7 +34,7 @@ const initialState: HotelState = {
       amenities: ["Pool", "Spa", "Restaurant", "Beach Access"],
     },
     {
-      id: "2",
+      hotelId: 2,
       name: "Mountain View Lodge",
       location: "Swiss Alps",
       price: 450,
@@ -41,7 +44,7 @@ const initialState: HotelState = {
       amenities: ["Ski Access", "Fireplace", "Restaurant", "Spa"],
     },
     {
-      id: "3",
+      hotelId: 3,
       name: "Urban Boutique Hotel",
       location: "New York City",
       price: 189,
@@ -51,7 +54,7 @@ const initialState: HotelState = {
       amenities: ["Gym", "Restaurant", "Business Center", "WiFi"],
     },
     {
-      id: "4",
+      hotelId: 4,
       name: "Tropical Paradise Resort",
       location: "Maldives",
       price: 599,

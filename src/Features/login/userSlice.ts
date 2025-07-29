@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit"
 export type TLoginResponse = {
     token: string | null,
     user: {
-        user_id: number,
+        userId: number,
         firstname: string,
         lastname: string,
         email: string,

@@ -2,7 +2,10 @@ import { useForm, type SubmitHandler } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { toast } from "react-hot-toast";
-import { ticketsAPI, type TSupportTicket } from "./ticketsAPI";
+import {
+  ticketsAPI,
+  type TSupportTicket,
+} from "../../Features/tickets/ticketsAPI";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import type { RootState } from "@/store/store";
@@ -12,7 +15,7 @@ type TicketFormData = {
 };
 
 type CreateTicketInputs = {
-  user_id: number;
+  user_id: number; // form field (snake_case)
   subject: string;
   description: string;
   status: string;
@@ -25,12 +28,12 @@ const ticketSchema = yup.object({
   status: yup.string().required("Status is required"),
 });
 
-export const UpdateTicket = ({ ticket }: TicketFormData) => {
+export const CreateTicketForm = ({ ticket }: TicketFormData) => {
   const fullUser = useSelector((state: RootState) => state.user);
   const user = fullUser?.user;
   const userId = user?.userId;
 
-  const [updateTicket, { isLoading }] = ticketsAPI.useUpdateticketMutation();
+  const [createTicket, { isLoading }] = ticketsAPI.useCreateTicketsMutation();
 
   const {
     register,
@@ -56,14 +59,10 @@ export const UpdateTicket = ({ ticket }: TicketFormData) => {
     }
   }, [ticket, userId, setValue, reset]);
 
+  // Submit handler converts user_id to userId in payload
   const onSubmit: SubmitHandler<CreateTicketInputs> = async (data) => {
-    if (!ticket?.ticketId) {
-      toast.error("Ticket ID not available for update");
-      return;
-    }
-
     const payload = {
-      userId: data.user_id,
+      userId: data.user_id, // API expects userId camelCase
       subject: data.subject,
       description: data.description,
       status: data.status,
@@ -71,22 +70,22 @@ export const UpdateTicket = ({ ticket }: TicketFormData) => {
 
     try {
       console.log("Payload being submitted:", payload);
-      await updateTicket({ id: ticket.ticketId, ...payload }).unwrap();
-      toast.success("Ticket updated successfully");
-      reset({ user_id: userId });
+      await createTicket(payload).unwrap();
+      toast.success("Ticket created successfully");
+      reset({ user_id: userId }); // reset with userId to keep it in form
       (
-        document.getElementById("update_ticket_modal") as HTMLDialogElement
+        document.getElementById("create_ticket_modal") as HTMLDialogElement
       )?.close();
     } catch (err) {
-      toast.error("Failed to update ticket");
-      console.error("Error updating ticket:", err);
+      toast.error("Failed to create ticket");
+      console.error("Error creating ticket:", err);
     }
   };
 
-  if (userId === undefined) return null;
+  if (userId === undefined) return null; // Don't render form without userId
 
   return (
-    <dialog id="update_ticket_modal" className="modal sm:modal-middle">
+    <dialog id="create_ticket_modal" className="modal sm:modal-middle">
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="space-y-4 p-4 modal-box bg-gray-900 border border-blue-500 text-white w-full max-w-xs sm:max-w-lg mx-auto rounded-lg"
@@ -97,6 +96,7 @@ export const UpdateTicket = ({ ticket }: TicketFormData) => {
           </label>
           <input
             {...register("user_id")}
+            value={userId}
             readOnly
             className="w-full mt-1 px-3 py-2 border border-gray-300 rounded-md bg-gray-700 text-white"
             placeholder="User ID"
@@ -157,7 +157,7 @@ export const UpdateTicket = ({ ticket }: TicketFormData) => {
             disabled={isLoading}
             className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
           >
-            {isLoading ? "Updating..." : "Update Ticket"}
+            {isLoading ? "Submitting..." : "Submit Ticket"}
           </button>
 
           <button
@@ -166,10 +166,10 @@ export const UpdateTicket = ({ ticket }: TicketFormData) => {
             onClick={() => {
               (
                 document.getElementById(
-                  "update_ticket_modal"
+                  "create_ticket_modal"
                 ) as HTMLDialogElement
               )?.close();
-              reset({ user_id: userId });
+              reset({ user_id: userId }); // keep userId after closing
             }}
           >
             Close

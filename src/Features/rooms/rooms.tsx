@@ -5,9 +5,6 @@ import { useState } from "react";
 import CreateRoom from "./createRoom";
 import UpdateRoom from "./updateRoom";
 import DeleteRoom from "./deleteRoom";
-// import Updateroom from "./updateRoom";
-// import Createroom from "./createRoom";
-// import Deleteroom from "./deleteRoom";
 
 const Rooms = () => {
   const [selectedroom, setSelectedRoom] = useState<TRoom | null>(null);

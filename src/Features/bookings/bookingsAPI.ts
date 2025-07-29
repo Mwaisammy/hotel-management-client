@@ -65,5 +65,12 @@ export const bookingsAPI = createApi({
             }),
             invalidatesTags: ['Bookings'],
         }),
+
+       getBookingsByUserId: builder.query<TBookings[], number>({
+  query: (userId) => `/bookings/user/${userId}`,
+  transformResponse: (response: { bookings: TBookings[] }) => response.bookings,
+  providesTags: ['Bookings'],
+}),
+
     }),
-})
+}) 

@@ -1,5 +1,6 @@
 import { Link } from "react-router";
-import { adminDrawerData } from "./drawerData";
+
+import { UserDrawerData } from "./userDrawerData";
 
 const UserDrawer = () => {
   return (
@@ -9,11 +10,11 @@ const UserDrawer = () => {
       </h2>
 
       <ul>
-        {adminDrawerData.map((item) => (
+        {UserDrawerData.map((item) => (
           <li key={item.id}>
             <Link
               to={item.link}
-              className="flex items-center p-3 text-sm hover:text-gray-800 space-x-3 border-b-2 border-transparent hover:border-white  hover:bg-blue-500 text-gray-700"
+              className="flex items-center p-3 text-sm hover:text-gray-800 space-x-3 border-b-2 border-transparent hover:border-white  hover:bg-[#ffbb0065] text-gray-700"
             >
               <item.icon />
 

@@ -2,7 +2,10 @@ import { useForm, type SubmitHandler } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { toast } from "react-hot-toast";
-import { ticketsAPI, type TSupportTicket } from "./ticketsAPI";
+import {
+  ticketsAPI,
+  type TSupportTicket,
+} from "../../../../Features/tickets/ticketsAPI";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import type { RootState } from "@/store/store";
@@ -25,7 +28,7 @@ const ticketSchema = yup.object({
   status: yup.string().required("Status is required"),
 });
 
-export const UpdateTicket = ({ ticket }: TicketFormData) => {
+export const UpdateUserTicket = ({ ticket }: TicketFormData) => {
   const fullUser = useSelector((state: RootState) => state.user);
   const user = fullUser?.user;
   const userId = user?.userId;
@@ -66,7 +69,7 @@ export const UpdateTicket = ({ ticket }: TicketFormData) => {
       userId: data.user_id,
       subject: data.subject,
       description: data.description,
-      status: data.status,
+      status: data.status || "Open",
     };
 
     try {
@@ -75,7 +78,7 @@ export const UpdateTicket = ({ ticket }: TicketFormData) => {
       toast.success("Ticket updated successfully");
       reset({ user_id: userId });
       (
-        document.getElementById("update_ticket_modal") as HTMLDialogElement
+        document.getElementById("update_user_ticket_modal") as HTMLDialogElement
       )?.close();
     } catch (err) {
       toast.error("Failed to update ticket");
@@ -86,7 +89,7 @@ export const UpdateTicket = ({ ticket }: TicketFormData) => {
   if (userId === undefined) return null;
 
   return (
-    <dialog id="update_ticket_modal" className="modal sm:modal-middle">
+    <dialog id="update_user_ticket_modal" className="modal sm:modal-middle">
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="space-y-4 p-4 modal-box bg-gray-900 border border-blue-500 text-white w-full max-w-xs sm:max-w-lg mx-auto rounded-lg"
@@ -136,19 +139,12 @@ export const UpdateTicket = ({ ticket }: TicketFormData) => {
 
         <div>
           <label className="block font-medium text-sm text-white">Status</label>
-          <select
+          <input
             {...register("status")}
-            className="w-full mt-1 px-3 py-2 border border-gray-300 rounded-md bg-black text-white"
-          >
-            <option value="">Select status</option>
-            <option value="Open">Open</option>
-            <option value="In Progress">In Progress</option>
-            <option value="Resolved">Resolved</option>
-            <option value="Closed">Closed</option>
-          </select>
-          {errors.status && (
-            <p className="text-red-500 text-sm">{errors.status.message}</p>
-          )}
+            value="Open"
+            readOnly
+            className="w-full mt-1 px-3 py-2 border border-gray-300 rounded-md bg-gray-700 text-white"
+          />
         </div>
 
         <div className="flex justify-between">

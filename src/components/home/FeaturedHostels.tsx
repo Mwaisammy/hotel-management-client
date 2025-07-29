@@ -16,10 +16,10 @@ const FeaturedHotels = () => {
 
   // Show first 4 hotels as featured
 
-  const handleBookHotel = (hotelId: string) => {
-    console.log("Booking hotel:", hotelId);
-    // Handle booking logic here
-  };
+  // const handleBookHotel = (hotelId: string) => {
+  //   console.log("Booking hotel:", hotelId);
+  //   // Handle booking logic here
+  // };
 
   return (
     <section className="py-16">
@@ -35,18 +35,12 @@ const FeaturedHotels = () => {
             across the country
           </p>
         </div>
-
         {/* Hotel Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
           {hotelData?.map((hotel: THotel) => (
-            <HotelCard
-              key={hotel.hotelId}
-              hotel={hotel}
-              onBook={handleBookHotel}
-            />
+            <HotelCard key={hotel.hotelId} hotel={hotel} />
           ))}
         </div>
-
         {/* View More Button */}
         <div className="text-center">
           <Button variant="outline" size="lg" className="px-8">

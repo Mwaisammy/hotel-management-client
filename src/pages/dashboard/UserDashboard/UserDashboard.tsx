@@ -14,7 +14,7 @@ const UserDashboard = () => {
   return (
     <div>
       <Header />
-      <div className="flex items-center bg-blue-600 p-4">
+      <div className="flex items-center bg-[#f18a24] p-4">
         <Button
           onClick={handleDrawerToggle}
           className="mr-4 text-white text-2xl lg:hidden cursor-pointer "
@@ -28,7 +28,7 @@ const UserDashboard = () => {
       </div>
       <div className="flex overflow-x-hidden">
         <aside
-          className={`bg-blue-400 w-68 min-h-screen fixed top-16 
+          className={`bg-gradient-to-b from-[#f19c1c] to-[#f69477] w-68 min-h-screen fixed top-16 
       ${drawerOpen ? "" : "hidden"}
       lg:static lg:block
     `}
@@ -47,7 +47,7 @@ const UserDashboard = () => {
         </aside>
 
         {/* Scrollable content area */}
-        <main className="bg-gray-900 text-white w-full min-h-screen overflow-auto">
+        <main className="bg-[#cf9e90] text-white w-full min-h-screen overflow-auto">
           <h4 className="text-center text-2xl m-4">
             Welcome to User Dashboard
           </h4>

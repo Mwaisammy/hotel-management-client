@@ -12,21 +12,36 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { useAppSelector } from "@/hooks/redux";
 import HotelCard from "@/components/hotels/HotelCards";
+import BookingModal from "./dashboard/UserDashboard/bookings/BookingModal";
+import type { TBookings } from "@/Features/bookings/bookingsAPI";
+import { useNavigate } from "react-router";
+import { hotelsAPI } from "@/Features/hotels/hotelsAPI";
 
 const Hotels = () => {
-  const { hotels } = useAppSelector((state) => state.hotels);
+  const navigate = useNavigate();
+  const {
+    data: hotelData,
+    isLoading: HotelsLoading,
+    // error: roomError,
+  } = hotelsAPI.useGetHotelsQuery(undefined, {
+    refetchOnMountOrArgChange: true,
+    pollingInterval: 60000,
+  });
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
   const [sortBy, setSortBy] = useState("rating");
   const [filterPrice, setFilterPrice] = useState("");
+  const [selectedBooking] = useState<TBookings | null>(null);
 
-  const handleBookHotel = (hotelId: string) => {
-    console.log("Booking hotel:", hotelId);
-    // Handle booking logic here
+  const handleViewRooms = (hotelId: number) => {
+    console.log("Hotel ID:", hotelId);
+    navigate(`/hotels/${hotelId}/rooms`);
   };
+  if (HotelsLoading) {
+    return <div>Loading...</div>;
+  }
 
-  const sortedHotels = [...hotels].sort((a, b) => {
+  const sortedHotels = [...(hotelData ?? [])].sort((a, b) => {
     switch (sortBy) {
       case "price-low":
         return a.price - b.price;
@@ -46,6 +61,8 @@ const Hotels = () => {
       <Header />
 
       <main className="container mx-auto px-4 py-8">
+        <BookingModal booking={selectedBooking} />
+
         {/* Page Header */}
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-foreground mb-2">
@@ -144,9 +161,9 @@ const Hotels = () => {
             >
               {sortedHotels.map((hotel) => (
                 <HotelCard
-                  key={hotel.id}
+                  key={hotel.hotelId}
                   hotel={hotel}
-                  onBook={handleBookHotel}
+                  onBook={handleViewRooms}
                 />
               ))}
             </div>

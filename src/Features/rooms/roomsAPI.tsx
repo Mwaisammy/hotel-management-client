@@ -61,5 +61,15 @@ export const roomsAPI = createApi({
       }),
       invalidatesTags: ["rooms"],
     }),
+    getRoomById: builder.query<TRoom, number>({
+      query: (roomId) => `/room/${roomId}`,
+      transformResponse: (response: { message: TRoom }) => response.message,
+      providesTags: ["rooms"],
+    }),
+    getRoomByHotelId: builder.query<TRoom[], number>({
+      query: (hotelId) => `/rooms/hotel/${hotelId}`,
+      // transformResponse: (response: { message: TRoom[] }) => response.message,
+      providesTags: ["rooms"],
+    }),
   }),
 });

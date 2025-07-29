@@ -2,19 +2,9 @@ import { Button } from "@/components/ui/button";
 import { ticketsAPI, type TSupportTicket } from "./ticketsAPI";
 import { PenBoxIcon, Trash2 } from "lucide-react";
 import { useState } from "react";
-import { CreateTicketForm } from "./createTickets";
-// import Createticket from "./createticket";
-// import Updateticket from "./updateticket";
-// import Deleteticket from "./deleteticket";
-// import Updateticket from "./updateticket";
-// import Createticket from "./createticket";
-// import Deleteticket from "./deleteticket";
-
-// userId: number;
-//     description: string;
-//     ticketId: number;
-//     subject: string;
-//     status: string;
+import { CreateTicketForm } from "../../pages/dashboard/UserDashboard/tickets/createUserTickets";
+import DeleteTicket from "@/pages/dashboard/UserDashboard/tickets/deleteTicket";
+import { UpdateTicket } from "./updateTicket";
 
 const Tickets = () => {
   const [selectedTicket, setSelectedTicket] = useState<TSupportTicket | null>(
@@ -33,14 +23,14 @@ const Tickets = () => {
   });
 
   const handleEdit = (ticket: TSupportTicket) => {
-    setSelectedticket(ticket);
+    setSelectedTicket(ticket);
   };
 
   console.log("Tickets:", ticketsData);
   return (
     <div>
-      {/* <Updateticket ticket={selectedticket} /> */}
-      {/* <Deleteticket ticket={deletedticket} /> */}
+      <UpdateTicket ticket={selectedTicket} />
+      <DeleteTicket ticket={deletedTicket} />
       <CreateTicketForm ticket={selectedTicket} />
 
       {ticketsLoading && <p>Loading...</p>}
@@ -67,7 +57,8 @@ const Tickets = () => {
                 <th className="px-4 py-2">Ticket Id</th>
                 <th className="px-4 py-2">User Id</th>
                 <th className="px-4 py-2">Subject</th>
-                <th className="px-4 py-2">Status</th>
+                <th className="px-4 py-2">Description</th>
+                <th className="px-10 py-2">Status</th>
                 <th className="px-4 py-2">Actions</th>
               </tr>
             </thead>
@@ -88,9 +79,12 @@ const Tickets = () => {
                   <td className="px-4 py-2 border-r border-gray-500 lg:text-base">
                     {ticket.subject}
                   </td>
-                  <td className="px-2 py-1 border-r border-gray-500 lg:text-base text-white text-sm font-medium">
+                  <td className="px-4 py-2 border-r border-gray-500 lg:text-base">
+                    {ticket.description}
+                  </td>
+                  <td className="px-4 py-1 border-r border-gray-500 lg:text-base text-white text-sm font-medium">
                     <span
-                      className={`px-2 py-1 rounded-md text-white text-sm font-medium ${
+                      className={`px-1 py-1 rounded-md text-white text-xs font-medium ${
                         ticket.status === "Open"
                           ? "bg-yellow-500"
                           : ticket.status === "In Progress"
@@ -142,7 +136,7 @@ const Tickets = () => {
           </table>
         </div>
       ) : (
-        <p>ticket not found</p>
+        <p>Tickets not found</p>
       )}
     </div>
   );

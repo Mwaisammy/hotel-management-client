@@ -63,5 +63,14 @@ export const ticketsAPI = createApi({
       }),
       invalidatesTags: ["tickets"],
     }),
+    getTicketByUserId: builder.query<
+      TSupportTicket[], // <-- return type should be an array
+      number // <-- userId only
+    >({
+      query: (userId) => `/support-tickets/user/${userId}`,
+      transformResponse: (response: { supportTickets: TSupportTicket[] }) =>
+        response.supportTickets,
+      providesTags: ["tickets"],
+    }),
   }),
 });

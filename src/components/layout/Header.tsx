@@ -1,10 +1,10 @@
-import { useState } from "react";
 import { Menu, X, User, Bell, Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link, NavLink } from "react-router";
 import Sunrise from "@/assets/images/Sunrise-nobg.png";
 import { useSelector } from "react-redux";
 import type { RootState } from "@/store/store";
+import { useState } from "react";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
